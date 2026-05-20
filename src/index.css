@@ -1,0 +1,156 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   HOT CHICKZ — global base
+   ============================================================ */
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scrollbar-color: #e4231b #120d0b;
+  }
+
+  body {
+    @apply bg-char text-bone font-sans antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: #e4231b;
+    color: #f7eedd;
+  }
+
+  ::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #120d0b;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(#e4231b, #ff6a14);
+    border-radius: 999px;
+    border: 2px solid #120d0b;
+  }
+
+  :focus-visible {
+    outline: 2px solid #ffc230;
+    outline-offset: 2px;
+  }
+
+  /* Static film-grain overlay — sits above everything, never blocks input */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.5;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ============================================================
+   Components — reusable brand surfaces
+   ============================================================ */
+@layer components {
+  /* Neon glow for headline text */
+  .neon-ember {
+    text-shadow:
+      0 0 7px rgba(255, 58, 46, 0.55),
+      0 0 22px rgba(228, 35, 27, 0.5),
+      0 0 46px rgba(228, 35, 27, 0.32);
+  }
+  .neon-flare {
+    text-shadow:
+      0 0 7px rgba(255, 194, 48, 0.6),
+      0 0 22px rgba(255, 138, 24, 0.45),
+      0 0 44px rgba(255, 106, 20, 0.3);
+  }
+
+  /* Card / panel surface used across the site + admin */
+  .panel {
+    @apply rounded-2xl bg-ash shadow-inset-ring;
+    border: 1px solid rgba(247, 238, 221, 0.07);
+  }
+
+  /* Hairline divider tinted with ember */
+  .hairline {
+    border-color: rgba(228, 35, 27, 0.22);
+  }
+}
+
+/* ============================================================
+   Utilities — sharp little tools
+   ============================================================ */
+@layer utilities {
+  /* Outlined display type (color: transparent, stroke only) */
+  .text-stroke {
+    -webkit-text-stroke: 2px #f7eedd;
+    color: transparent;
+  }
+  .text-stroke-ember {
+    -webkit-text-stroke: 2px #e4231b;
+    color: transparent;
+  }
+  .text-stroke-thin {
+    -webkit-text-stroke: 1px currentColor;
+  }
+
+  /* Soft fade on the horizontal edges (marquee strips) */
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 9%,
+      #000 91%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 9%,
+      #000 91%,
+      transparent
+    );
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  .paused {
+    animation-play-state: paused;
+  }
+}
