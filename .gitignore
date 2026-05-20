@@ -26,8 +26,7 @@ hotchickz-menu.png
 qa-*.jpeg
 qa-*.png
 
-# oversized raw source assets dropped into public/assets — kept on disk,
-# excluded from the repo + Pages deploy (20-60MB camera exports / video).
-# Optimize before using on the site.
+# oversized raw source assets — kept on disk, excluded from the repo.
+# Web-optimized versions live in public/assets/photos/ and are tracked.
 public/assets/DSC*.jpg
-public/assets/*.mp4
+public/assets/HotChicksHyperlapse.mp4

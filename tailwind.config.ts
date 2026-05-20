@@ -44,6 +44,7 @@ export default {
         display: ['Anton', 'Impact', 'sans-serif'],
         heading: ['"Bricolage Grotesque"', 'ui-sans-serif', 'sans-serif'],
         sans: ['"Hanken Grotesk"', 'system-ui', 'sans-serif'],
+        script: ['Caveat', 'ui-serif', 'cursive'],
       },
       letterSpacing: {
         ember: '0.14em',

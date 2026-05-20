@@ -14,6 +14,10 @@ import { HeatMeter } from '@/components/brand/HeatMeter'
 import { Marquee } from '@/components/ui/Marquee'
 import { Reveal } from '@/components/ui/Reveal'
 import { MenuItemCard } from '@/components/site/MenuItemCard'
+import { HyperlapseVideo } from '@/components/site/HyperlapseVideo'
+import { LemonadeShowcase } from '@/components/site/LemonadeShowcase'
+import { ExperienceSection } from '@/components/site/ExperienceSection'
+import { ComingSoon } from '@/components/site/ComingSoon'
 import { buttonStyles } from '@/components/ui/Button'
 
 /* ---- shared bits ---------------------------------------------------- */
@@ -54,7 +58,7 @@ function Hero() {
       {/* photographic backdrop */}
       <div className="pointer-events-none absolute inset-0">
         <img
-          src={asset('assets/hero.jpg')}
+          src={asset('assets/photos/hero-wide.jpg')}
           alt=""
           aria-hidden="true"
           className="h-full w-full object-cover opacity-40"
@@ -93,6 +97,17 @@ function Hero() {
             <SauceDrips />
           </span>
         </motion.h1>
+
+        <motion.div
+          variants={fadeUp}
+          className="mt-4 flex items-center gap-3"
+        >
+          <span className="h-px w-8 bg-flare/40" />
+          <span className="font-script text-4xl leading-none text-flare sm:text-5xl">
+            Happy Tears
+          </span>
+          <span className="h-px w-8 bg-flare/40" />
+        </motion.div>
 
         <motion.p
           variants={fadeUp}
@@ -346,57 +361,82 @@ function FindUsStrip() {
   const { open, today } = getOpenState()
   return (
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
-      <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-        <Reveal>
-          <Eyebrow>Come get it</Eyebrow>
-          <h2 className="mt-3 font-display text-5xl leading-[0.9] text-bone sm:text-7xl">
-            FIND THE <span className="text-ember">FLAME</span>
-          </h2>
-          <div className="mt-6 space-y-3">
-            <a
-              href={BUSINESS.mapUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-3 font-sans text-bone transition-colors hover:text-flare"
-            >
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-ash text-ember">
-                <MapPin size={18} />
-              </span>
-              {BUSINESS.addressLine}
-            </a>
-            <a
-              href={`tel:${BUSINESS.phoneRaw}`}
-              className="flex items-center gap-3 font-sans text-bone transition-colors hover:text-flare"
-            >
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-ash text-ember">
-                <Phone size={18} />
-              </span>
-              {BUSINESS.phone}
-            </a>
-            <div className="flex items-center gap-3 font-sans text-bone">
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-ash text-ember">
-                <Clock size={18} />
-              </span>
-              <span>
-                {open ? 'Open now' : 'Closed'} · Today {today.label}
-              </span>
+      <Reveal>
+        <Eyebrow>Come get it</Eyebrow>
+        <h2 className="mt-3 font-display text-5xl leading-[0.9] text-bone sm:text-7xl">
+          FIND THE <span className="text-ember">FLAME</span>
+        </h2>
+      </Reveal>
+
+      <div className="mt-9 grid gap-6 lg:grid-cols-[minmax(0,380px)_1fr]">
+        {/* live hyperlapse of the storefront */}
+        <Reveal className="overflow-hidden rounded-3xl border border-bone/10 shadow-plate">
+          <div className="relative aspect-[3/4]">
+            <HyperlapseVideo />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-char via-char/20 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-5">
+              <p className="font-heading text-[10px] font-extrabold uppercase tracking-ember text-flare">
+                Pull up
+              </p>
+              <p className="font-display text-2xl leading-tight text-bone">
+                {BUSINESS.address.street}
+              </p>
+              <p className="font-sans text-sm text-smoke">
+                {BUSINESS.address.city}, {BUSINESS.address.state}
+              </p>
             </div>
           </div>
         </Reveal>
 
-        <Reveal delay={0.12}>
-          <div className="rounded-2xl border border-bone/8 bg-ash p-6">
-            <h3 className="font-heading text-sm font-extrabold uppercase tracking-ember text-smoke">
-              Weekly Hours
-            </h3>
-            <ul className="mt-4 divide-y divide-bone/8">
+        {/* contact + hours */}
+        <Reveal delay={0.1} className="flex flex-col gap-4">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <a
+              href={BUSINESS.mapUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-start gap-3 rounded-2xl border border-bone/8 bg-ash p-4 transition-colors hover:border-ember/40"
+            >
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-char text-ember">
+                <MapPin size={16} />
+              </span>
+              <span className="font-sans text-sm text-bone">
+                {BUSINESS.addressLine}
+              </span>
+            </a>
+            <a
+              href={`tel:${BUSINESS.phoneRaw}`}
+              className="flex items-start gap-3 rounded-2xl border border-bone/8 bg-ash p-4 transition-colors hover:border-ember/40"
+            >
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-char text-ember">
+                <Phone size={16} />
+              </span>
+              <span className="font-sans text-sm text-bone">{BUSINESS.phone}</span>
+            </a>
+          </div>
+          <div className="flex-1 rounded-2xl border border-bone/8 bg-ash p-6">
+            <div className="flex items-center justify-between">
+              <h3 className="font-heading text-sm font-extrabold uppercase tracking-ember text-smoke">
+                Weekly Hours
+              </h3>
+              <span
+                className={cn(
+                  'inline-flex items-center gap-1.5 font-heading text-[10px] font-extrabold uppercase tracking-ember',
+                  open ? 'text-heat-none' : 'text-ember',
+                )}
+              >
+                <Clock size={12} />
+                {open ? 'Open now' : 'Closed'}
+              </span>
+            </div>
+            <ul className="mt-3 divide-y divide-bone/8">
               {BUSINESS.hours.map((h) => {
                 const isToday = h.short === today.short
                 return (
                   <li
                     key={h.day}
                     className={cn(
-                      'flex items-center justify-between py-2.5 font-sans text-sm',
+                      'flex items-center justify-between py-2 font-sans text-sm',
                       isToday ? 'text-bone' : 'text-smoke',
                     )}
                   >
@@ -430,8 +470,11 @@ export function Home() {
       <Hero />
       <HeatBand />
       <Featured />
+      <LemonadeShowcase />
       <HeatLadder />
+      <ExperienceSection />
       <StoryStrip />
+      <ComingSoon />
       <CateringTeaser />
       <FindUsStrip />
     </>

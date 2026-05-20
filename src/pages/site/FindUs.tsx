@@ -9,6 +9,7 @@ import {
   Phone,
 } from 'lucide-react'
 import { PageHeader } from '@/components/site/PageHeader'
+import { asset } from '@/lib/asset'
 import { Reveal } from '@/components/ui/Reveal'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { buttonStyles } from '@/components/ui/Button'
@@ -32,6 +33,7 @@ export function FindUs() {
           </>
         }
         intro="One location, all the heat. Order ahead and we'll have it boxed and ready."
+        image={asset('assets/photos/exterior-wide.jpg')}
       />
 
       {/* map + contact */}

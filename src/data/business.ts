@@ -15,6 +15,7 @@ export const BUSINESS = {
   name: 'Hot Chickz',
   legalName: 'Hot Chickz — Hot Chicken',
   tagline: 'Halal hot chicken, done loud.',
+  slogan: 'Happy Tears',
   blurb:
     'Nashville-style hot chicken out of Fort Wayne, Indiana. Hand-breaded, cooked to order, and dialed in from No Spice to Reaper. 100% halal.',
   established: 2024,

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { PageHeader } from '@/components/site/PageHeader'
+import { asset } from '@/lib/asset'
 import { Reveal } from '@/components/ui/Reveal'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { Flame } from '@/components/brand/Flame'
@@ -48,6 +49,7 @@ export function About() {
           </>
         }
         intro="Hot Chickz is a small Fort Wayne spot with a loud idea — Nashville-style hot chicken, done properly, done halal."
+        image={asset('assets/photos/header-basket.jpg')}
       />
 
       {/* origin */}

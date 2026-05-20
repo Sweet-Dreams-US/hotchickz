@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { CATEGORIES, type CategoryKey, itemsByCategory } from '@/data/menu'
 import { HEAT_LEVELS } from '@/data/heatLevels'
+import { asset } from '@/lib/asset'
 import { cn } from '@/lib/cn'
 import { SmokeWisps } from '@/components/brand/SmokeWisps'
 import { Reveal } from '@/components/ui/Reveal'
@@ -41,6 +42,15 @@ export function Menu() {
     <div>
       {/* header */}
       <header className="relative overflow-hidden border-b border-bone/10 bg-coal px-4 pb-12 pt-32 sm:px-6">
+        <div className="pointer-events-none absolute inset-0">
+          <img
+            src={asset('assets/photos/header-bowls.jpg')}
+            alt=""
+            aria-hidden="true"
+            className="h-full w-full object-cover opacity-[0.38]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-coal/82 via-coal/68 to-coal" />
+        </div>
         <div className="pointer-events-none absolute inset-0 bg-flame-radial opacity-70" />
         <SmokeWisps count={5} />
         <div className="relative mx-auto max-w-7xl">

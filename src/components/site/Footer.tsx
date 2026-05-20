@@ -27,7 +27,7 @@ const EXPLORE = [
   { to: '/find-us', label: 'Find Us' },
 ]
 
-const TICKER = ['Halal', 'Hand-Breaded', 'Cooked to Order', 'Five Heat Levels', 'Fort Wayne']
+const TICKER = ['Halal', 'Hand-Breaded', 'Happy Tears', 'Cooked to Order', 'Five Heat Levels', 'Fort Wayne']
 
 export function Footer() {
   const todayShort = getOpenState().today.short
@@ -68,7 +68,10 @@ export function Footer() {
       <div className="mx-auto grid max-w-7xl gap-10 border-t border-bone/10 px-4 py-12 sm:px-6 md:grid-cols-[1.4fr_1fr_1.3fr]">
         <div>
           <Logo size={52} />
-          <p className="mt-4 max-w-xs font-sans text-sm leading-relaxed text-smoke">
+          <p className="mt-3 font-script text-3xl leading-none text-flare">
+            Happy Tears
+          </p>
+          <p className="mt-3 max-w-xs font-sans text-sm leading-relaxed text-smoke">
             {BUSINESS.blurb}
           </p>
           <div className="mt-5 flex gap-2.5">

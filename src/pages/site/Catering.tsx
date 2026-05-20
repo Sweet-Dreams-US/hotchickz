@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import { Check, Clock, Flame as FlameIcon, UtensilsCrossed } from 'lucide-react'
 import { PageHeader } from '@/components/site/PageHeader'
+import { asset } from '@/lib/asset'
 import { Reveal } from '@/components/ui/Reveal'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { Badge } from '@/components/ui/Badge'
@@ -81,6 +82,7 @@ export function Catering() {
           </>
         }
         intro="Mix-and-match trays of hand-breaded heat for parties, offices and block parties of every size."
+        image={asset('assets/photos/header-dipping.jpg')}
       />
 
       {/* note */}
