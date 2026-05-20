@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Instagram, MapPin } from 'lucide-react'
 import { Reveal } from '@/components/ui/Reveal'
 import { Eyebrow } from '@/components/ui/Eyebrow'
@@ -10,12 +9,14 @@ import { asset } from '@/lib/asset'
 import { cn } from '@/lib/cn'
 
 /**
- * Second-location teaser. Drops in `public/assets/photos/coming-soon.jpg`
- * automatically once it exists; until then a branded placeholder shows.
+ * Second-location teaser.
+ *
+ * TO ADD THE REAL PHOTO: drop the image into public/assets/photos/ and set
+ * COMING_SOON_PHOTO to its filename — the placeholder swaps out automatically.
  */
-export function ComingSoon() {
-  const [hasPhoto, setHasPhoto] = useState(true)
+const COMING_SOON_PHOTO: string | null = null
 
+export function ComingSoon() {
   return (
     <section className="relative overflow-hidden border-y border-bone/10 bg-coal py-20 sm:py-28">
       <div className="pointer-events-none absolute inset-0 bg-flame-radial opacity-50" />
@@ -45,12 +46,11 @@ export function ComingSoon() {
 
         <Reveal delay={0.12}>
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-bone/10">
-            {hasPhoto ? (
+            {COMING_SOON_PHOTO ? (
               <img
-                src={asset('assets/photos/coming-soon.jpg')}
+                src={asset(`assets/photos/${COMING_SOON_PHOTO}`)}
                 alt="The new Hot Chickz location"
                 className="h-full w-full object-cover"
-                onError={() => setHasPhoto(false)}
               />
             ) : (
               <div className="relative grid h-full w-full place-items-center border-2 border-dashed border-ember/40 bg-gradient-to-br from-ash via-coal to-char">
