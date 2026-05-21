@@ -21,7 +21,9 @@
 
   body {
     @apply bg-char text-bone font-sans antialiased;
-    overflow-x: hidden;
+    /* `clip` (not `hidden`) blocks horizontal scroll without creating a
+       scroll container — which would break `position: sticky` descendants. */
+    overflow-x: clip;
   }
 
   ::selection {

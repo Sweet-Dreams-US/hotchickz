@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowRight, ChevronDown, Clock, MapPin, Phone } from 'lucide-react'
@@ -31,14 +32,50 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   )
 }
 
+/** Thick, gloopy sauce that coats the bottom of the word and drips/pools. */
 function SauceDrips() {
+  const tongues = [
+    { x: 3, w: 26, h: 48 },
+    { x: 16, w: 38, h: 70 },
+    { x: 29, w: 22, h: 36 },
+    { x: 41, w: 34, h: 68 },
+    { x: 55, w: 28, h: 54 },
+    { x: 68, w: 40, h: 66 },
+    { x: 83, w: 26, h: 58 },
+  ]
+  const drops = [
+    { x: 42, top: 64, size: 14, delay: 0 },
+    { x: 69, top: 62, size: 18, delay: 1.2 },
+    { x: 17, top: 60, size: 12, delay: 2.4 },
+  ]
   return (
-    <span className="pointer-events-none absolute -bottom-3 left-0 flex w-full justify-around px-[12%]">
-      {[0, 1, 2, 3].map((i) => (
+    <span
+      className="pointer-events-none absolute -bottom-1.5 left-0 right-0 block h-0"
+      aria-hidden="true"
+    >
+      {/* sauce coating — pools across the whole word, leaves no gaps */}
+      <span className="absolute inset-x-0 top-0 h-6 rounded-b-xl bg-ember" />
+      <span className="absolute inset-x-[6%] top-1 h-1.5 rounded-full bg-bone/25" />
+      {/* heavy drip tongues hanging off the pool */}
+      {tongues.map((t, i) => (
         <span
           key={i}
-          className="block w-2 rounded-b-full bg-ember animate-drip"
-          style={{ height: 18 + (i % 2) * 12, animationDelay: `${i * 0.7}s` }}
+          className="absolute top-3 rounded-b-full bg-ember"
+          style={{ left: `${t.x}%`, width: t.w, height: t.h }}
+        />
+      ))}
+      {/* droplets breaking off and falling */}
+      {drops.map((d, i) => (
+        <span
+          key={`drop-${i}`}
+          className="absolute rounded-full bg-ember animate-drip"
+          style={{
+            left: `${d.x}%`,
+            top: d.top,
+            width: d.size,
+            height: d.size * 1.35,
+            animationDelay: `${d.delay}s`,
+          }}
         />
       ))}
     </span>
@@ -52,103 +89,155 @@ const fadeUp = {
 
 /* ---- hero ----------------------------------------------------------- */
 
+/**
+ * Scroll-scrubbed hero. The section is tall; its inner stage is `sticky`, so
+ * it pins while you scroll the runway — and scroll progress drives the
+ * sauce-dunk video frame-by-frame via `video.currentTime`.
+ */
 function Hero() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const textRef = useRef<HTMLDivElement>(null)
+  const cueRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const section = sectionRef.current
+    const video = videoRef.current
+    if (!section || !video) return
+
+    // Prime the decoder so currentTime seeks are instant.
+    video.play().then(() => video.pause()).catch(() => {})
+
+    let ticking = false
+    const apply = () => {
+      ticking = false
+      const runway = section.offsetHeight - window.innerHeight
+      if (runway <= 0) return
+      const progress = Math.min(
+        1,
+        Math.max(0, -section.getBoundingClientRect().top / runway),
+      )
+      if (video.duration && Number.isFinite(video.duration)) {
+        video.currentTime = progress * (video.duration - 0.05)
+      }
+      if (textRef.current) {
+        // copy holds, then lifts away over the back third of the scrub
+        const fade = Math.min(1, Math.max(0, (progress - 0.6) / 0.32))
+        textRef.current.style.opacity = String(1 - fade)
+        textRef.current.style.transform = `translateY(${-fade * 64}px)`
+      }
+      if (cueRef.current) {
+        cueRef.current.style.opacity = String(1 - Math.min(1, progress / 0.12))
+      }
+    }
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true
+        requestAnimationFrame(apply)
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    video.addEventListener('loadedmetadata', apply)
+    apply()
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      video.removeEventListener('loadedmetadata', apply)
+    }
+  }, [])
+
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-28">
-      {/* photographic backdrop */}
-      <div className="pointer-events-none absolute inset-0">
-        <img
-          src={asset('assets/photos/hero-wide.jpg')}
-          alt=""
-          aria-hidden="true"
-          className="h-full w-full object-cover opacity-40"
+    <section ref={sectionRef} className="relative h-[220vh]">
+      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+        {/* scroll-scrubbed sauce-dunk video */}
+        <video
+          ref={videoRef}
+          className="absolute inset-0 h-full w-full object-cover"
+          src={asset('assets/hero-dunk.mp4')}
+          poster={asset('assets/photos/header-dipping.jpg')}
+          muted
+          playsInline
+          preload="auto"
+          tabIndex={-1}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-char/85 via-char/72 to-char" />
+        {/* legibility scrims — heavier on the left where the copy sits */}
+        <div className="absolute inset-0 bg-gradient-to-r from-char via-char/85 to-char/15" />
+        <div className="absolute inset-0 bg-gradient-to-t from-char/90 via-transparent to-char/55" />
+        <SmokeWisps count={5} />
+
+        {/* off-center hero copy */}
+        <div
+          ref={textRef}
+          className="relative z-10 mx-auto w-full max-w-7xl px-4 will-change-[opacity,transform] sm:px-6"
+        >
+          <motion.div
+            variants={{
+              show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
+            }}
+            initial="hidden"
+            animate="show"
+            className="max-w-xl"
+          >
+            <motion.div variants={fadeUp}>
+              <Eyebrow>Fort Wayne, IN · 100% Halal · Cooked to Order</Eyebrow>
+            </motion.div>
+
+            <motion.h1
+              variants={fadeUp}
+              className="mt-5 font-display leading-[0.8] text-bone"
+            >
+              <span className="block text-[clamp(2.3rem,7vw,5.25rem)] tracking-billboard">
+                TASTE THE
+              </span>
+              <span className="relative mt-1 inline-block">
+                <span className="block text-[clamp(4.5rem,15vw,11.5rem)] text-ember neon-ember">
+                  HEAT
+                </span>
+                <SauceDrips />
+              </span>
+            </motion.h1>
+
+            <motion.div variants={fadeUp} className="mt-24 flex items-center gap-3">
+              <span className="h-px w-8 bg-flare/40" />
+              <span className="font-script text-4xl leading-none text-flare sm:text-5xl">
+                Happy Tears
+              </span>
+            </motion.div>
+
+            <motion.p
+              variants={fadeUp}
+              className="mt-5 max-w-md font-sans text-base leading-relaxed text-smoke"
+            >
+              Nashville-style hot chicken — hand-breaded and fired to order,
+              dialed from a gentle No Spice to the eye-watering Reaper.
+            </motion.p>
+
+            <motion.div
+              variants={fadeUp}
+              className="mt-7 flex flex-col gap-3 sm:flex-row"
+            >
+              <Link to="/menu" className={buttonStyles('primary', 'lg')}>
+                Order Now
+                <ArrowRight size={18} />
+              </Link>
+              <Link to="/about" className={buttonStyles('ghost', 'lg')}>
+                How We Do It
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* scroll cue */}
+        <div
+          ref={cueRef}
+          className="absolute inset-x-0 bottom-6 flex flex-col items-center gap-1"
+        >
+          <span className="font-heading text-[10px] font-extrabold uppercase tracking-ember text-smoke">
+            Scroll to dunk
+          </span>
+          <ChevronDown size={20} className="animate-bounce text-smoke" />
+        </div>
       </div>
-      {/* atmosphere */}
-      <div className="pointer-events-none absolute inset-0 bg-flame-radial" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ember/20 to-transparent" />
-      <SmokeWisps count={7} />
-      <span className="pointer-events-none absolute left-1/2 top-1/2 -z-0 -translate-x-1/2 -translate-y-1/2 select-none font-display text-[42vw] leading-none text-bone/[0.03]">
-        HC
-      </span>
-
-      <motion.div
-        variants={{ show: { transition: { staggerChildren: 0.13, delayChildren: 0.05 } } }}
-        initial="hidden"
-        animate="show"
-        className="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center"
-      >
-        <motion.div variants={fadeUp}>
-          <Eyebrow>Fort Wayne, IN · 100% Halal · Cooked to Order</Eyebrow>
-        </motion.div>
-
-        <motion.h1
-          variants={fadeUp}
-          className="mt-5 font-display leading-[0.82] text-bone"
-        >
-          <span className="block text-[clamp(2.6rem,9vw,6rem)] tracking-billboard">
-            TASTE THE
-          </span>
-          <span className="relative mt-1 block">
-            <span className="block text-[clamp(5rem,21vw,15rem)] text-ember neon-ember">
-              HEAT
-            </span>
-            <SauceDrips />
-          </span>
-        </motion.h1>
-
-        <motion.div
-          variants={fadeUp}
-          className="mt-4 flex items-center gap-3"
-        >
-          <span className="h-px w-8 bg-flare/40" />
-          <span className="font-script text-4xl leading-none text-flare sm:text-5xl">
-            Happy Tears
-          </span>
-          <span className="h-px w-8 bg-flare/40" />
-        </motion.div>
-
-        <motion.p
-          variants={fadeUp}
-          className="mt-8 max-w-xl font-sans text-base leading-relaxed text-smoke sm:text-lg"
-        >
-          Nashville-style hot chicken — hand-breaded and fired to order, dialed
-          from a gentle No Spice to the eye-watering Reaper. Hot chicken done loud.
-        </motion.p>
-
-        <motion.div
-          variants={fadeUp}
-          className="mt-9 flex flex-col items-center gap-3 sm:flex-row"
-        >
-          <Link to="/menu" className={buttonStyles('primary', 'lg')}>
-            Order Now
-            <ArrowRight size={18} />
-          </Link>
-          <Link to="/about" className={buttonStyles('ghost', 'lg')}>
-            How We Do It
-          </Link>
-        </motion.div>
-
-        <motion.div
-          variants={fadeUp}
-          className="mt-11 flex items-center gap-3 rounded-full border border-bone/10 bg-coal/60 px-5 py-2.5 backdrop-blur"
-        >
-          <HeatMeter level="reaper" size={16} />
-          <span className="font-heading text-xs font-extrabold uppercase tracking-ember text-smoke">
-            Five levels of fire
-          </span>
-        </motion.div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4 }}
-        className="absolute bottom-7 left-1/2 -translate-x-1/2"
-      >
-        <ChevronDown size={26} className="animate-bounce text-smoke" />
-      </motion.div>
     </section>
   )
 }
