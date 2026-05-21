@@ -32,39 +32,42 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   )
 }
 
-/** Thick, gloopy sauce that coats the bottom of the word and drips/pools. */
+/** A thin sauce coating with delicate drip strands hanging off the word. */
 function SauceDrips() {
-  const tongues = [
-    { x: 3, w: 26, h: 48 },
-    { x: 16, w: 38, h: 70 },
-    { x: 29, w: 22, h: 36 },
-    { x: 41, w: 34, h: 68 },
-    { x: 55, w: 28, h: 54 },
-    { x: 68, w: 40, h: 66 },
-    { x: 83, w: 26, h: 58 },
+  const strands = [
+    { x: 2, w: 6, h: 20 },
+    { x: 11, w: 9, h: 38 },
+    { x: 20, w: 6, h: 15 },
+    { x: 28, w: 8, h: 30 },
+    { x: 37, w: 6, h: 22 },
+    { x: 45, w: 9, h: 43 },
+    { x: 54, w: 6, h: 17 },
+    { x: 62, w: 8, h: 33 },
+    { x: 71, w: 6, h: 24 },
+    { x: 80, w: 9, h: 40 },
+    { x: 90, w: 6, h: 19 },
   ]
   const drops = [
-    { x: 42, top: 64, size: 14, delay: 0 },
-    { x: 69, top: 62, size: 18, delay: 1.2 },
-    { x: 17, top: 60, size: 12, delay: 2.4 },
+    { x: 45, top: 44, size: 9, delay: 0 },
+    { x: 80, top: 41, size: 11, delay: 1.3 },
+    { x: 12, top: 39, size: 8, delay: 2.5 },
   ]
   return (
     <span
-      className="pointer-events-none absolute -bottom-1.5 left-0 right-0 block h-0"
+      className="pointer-events-none absolute -bottom-1 left-0 right-0 block h-0"
       aria-hidden="true"
     >
-      {/* sauce coating — pools across the whole word, leaves no gaps */}
-      <span className="absolute inset-x-0 top-0 h-6 rounded-b-xl bg-ember" />
-      <span className="absolute inset-x-[6%] top-1 h-1.5 rounded-full bg-bone/25" />
-      {/* heavy drip tongues hanging off the pool */}
-      {tongues.map((t, i) => (
+      {/* thin continuous coating — covers every letter, no gaps */}
+      <span className="absolute inset-x-0 top-0 h-2 rounded-b-md bg-ember" />
+      {/* delicate drip strands */}
+      {strands.map((s, i) => (
         <span
           key={i}
-          className="absolute top-3 rounded-b-full bg-ember"
-          style={{ left: `${t.x}%`, width: t.w, height: t.h }}
+          className="absolute top-1 rounded-b-full bg-ember"
+          style={{ left: `${s.x}%`, width: s.w, height: s.h }}
         />
       ))}
-      {/* droplets breaking off and falling */}
+      {/* droplets breaking off */}
       {drops.map((d, i) => (
         <span
           key={`drop-${i}`}
@@ -73,7 +76,7 @@ function SauceDrips() {
             left: `${d.x}%`,
             top: d.top,
             width: d.size,
-            height: d.size * 1.35,
+            height: d.size * 1.4,
             animationDelay: `${d.delay}s`,
           }}
         />
@@ -154,7 +157,7 @@ function Hero() {
           ref={videoRef}
           className="absolute inset-0 h-full w-full object-cover"
           src={asset('assets/hero-dunk.mp4')}
-          poster={asset('assets/photos/header-dipping.jpg')}
+          poster={asset('assets/photos/dunk-hero.jpg')}
           muted
           playsInline
           preload="auto"
@@ -197,7 +200,7 @@ function Hero() {
               </span>
             </motion.h1>
 
-            <motion.div variants={fadeUp} className="mt-24 flex items-center gap-3">
+            <motion.div variants={fadeUp} className="mt-14 flex items-center gap-3">
               <span className="h-px w-8 bg-flare/40" />
               <span className="font-script text-4xl leading-none text-flare sm:text-5xl">
                 Happy Tears
