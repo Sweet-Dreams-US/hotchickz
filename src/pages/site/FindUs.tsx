@@ -33,8 +33,7 @@ export function FindUs() {
           </>
         }
         intro="One location, all the heat. Order ahead and we'll have it boxed and ready."
-        image={asset('assets/headers/findus.jpg')}
-        video={asset('assets/headers/findus.mp4')}
+        image={asset('assets/photos/exterior-wide.jpg')}
       />
 
       {/* map + contact */}

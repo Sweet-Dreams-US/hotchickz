@@ -30,13 +30,13 @@ const FLAVORS = [
     name: 'Cherry',
     color: '#E4231B',
     image: 'assets/photos/lemonade-flavors/cherry.jpg',
-    note: 'Deep, ruby-red and bold.',
+    note: 'Bright, bold and berry-sweet.',
   },
   {
     name: 'Mix It Up',
     color: '#FF6A14',
     image: 'assets/photos/lemonade-flavors/mix.jpg',
-    note: 'Can’t choose? Swirl them all.',
+    note: 'Can’t choose? Get every flavor at once.',
   },
 ]
 

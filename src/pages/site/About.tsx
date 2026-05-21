@@ -49,8 +49,7 @@ export function About() {
           </>
         }
         intro="Hot Chickz is a small Fort Wayne spot with a loud idea — Nashville-style hot chicken, done properly, done halal."
-        image={asset('assets/headers/about.jpg')}
-        video={asset('assets/headers/about.mp4')}
+        image={asset('assets/photos/header-basket.jpg')}
       />
 
       {/* origin */}

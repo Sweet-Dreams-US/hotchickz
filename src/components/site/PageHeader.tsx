@@ -9,23 +9,14 @@ interface PageHeaderProps {
   intro?: ReactNode
   /** Optional background photo — pass a resolved URL via asset(). */
   image?: string
-  /** Optional looping video background — pass a resolved URL via asset(). */
-  video?: string
   children?: ReactNode
 }
 
 /** Shared storefront page header — flame-lit, smoky, billboard type. */
-export function PageHeader({
-  eyebrow,
-  title,
-  intro,
-  image,
-  video,
-  children,
-}: PageHeaderProps) {
+export function PageHeader({ eyebrow, title, intro, image, children }: PageHeaderProps) {
   return (
     <header className="relative overflow-hidden border-b border-bone/10 bg-coal px-4 pb-12 pt-32 sm:px-6">
-      <HeaderBackdrop video={video} image={image} />
+      <HeaderBackdrop image={image} />
       <div className="pointer-events-none absolute inset-0 bg-flame-radial opacity-70" />
       <SmokeWisps count={5} />
       <div className="relative mx-auto max-w-7xl">

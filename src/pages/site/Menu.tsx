@@ -43,10 +43,7 @@ export function Menu() {
     <div>
       {/* header */}
       <header className="relative overflow-hidden border-b border-bone/10 bg-coal px-4 pb-12 pt-32 sm:px-6">
-        <HeaderBackdrop
-          video={asset('assets/headers/menu.mp4')}
-          image={asset('assets/headers/menu.jpg')}
-        />
+        <HeaderBackdrop image={asset('assets/photos/header-bowls.jpg')} />
         <div className="pointer-events-none absolute inset-0 bg-flame-radial opacity-70" />
         <SmokeWisps count={5} />
         <div className="relative mx-auto max-w-7xl">

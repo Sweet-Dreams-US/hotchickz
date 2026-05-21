@@ -82,8 +82,7 @@ export function Catering() {
           </>
         }
         intro="Mix-and-match trays of hand-breaded heat for parties, offices and block parties of every size."
-        image={asset('assets/headers/catering.jpg')}
-        video={asset('assets/headers/catering.mp4')}
+        image={asset('assets/photos/header-dipping.jpg')}
       />
 
       {/* note */}
