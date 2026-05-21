@@ -82,7 +82,8 @@ export function Catering() {
           </>
         }
         intro="Mix-and-match trays of hand-breaded heat for parties, offices and block parties of every size."
-        image={asset('assets/photos/header-dipping.jpg')}
+        image={asset('assets/headers/catering.jpg')}
+        video={asset('assets/headers/catering.mp4')}
       />
 
       {/* note */}
@@ -160,14 +161,27 @@ export function Catering() {
           <div className="mt-9 grid gap-5 md:grid-cols-3">
             {CATERING_TRAYS.map((tray, i) => (
               <Reveal key={tray.id} delay={i * 0.08}>
-                <div className="h-full rounded-2xl border border-bone/8 bg-ash p-6">
-                  <Badge variant="dark">{tray.serves}</Badge>
-                  <h3 className="mt-3 font-heading text-lg font-extrabold text-bone">
-                    {tray.name}
-                  </h3>
-                  <p className="mt-2 font-sans text-sm leading-snug text-smoke">
-                    {tray.description}
-                  </p>
+                <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-bone/8 bg-ash">
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img
+                      src={asset(tray.image)}
+                      alt={tray.name}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ash/70 via-transparent to-transparent" />
+                    <div className="absolute left-3 top-3">
+                      <Badge variant="dark">{tray.serves}</Badge>
+                    </div>
+                  </div>
+                  <div className="flex flex-1 flex-col p-6">
+                    <h3 className="font-heading text-lg font-extrabold text-bone">
+                      {tray.name}
+                    </h3>
+                    <p className="mt-2 font-sans text-sm leading-snug text-smoke">
+                      {tray.description}
+                    </p>
+                  </div>
                 </div>
               </Reveal>
             ))}

@@ -8,6 +8,8 @@ export interface CateringTray {
   name: string
   description: string
   serves: string
+  /** Tray photo — pass through asset() at render time. */
+  image: string
 }
 
 export interface CateringPackage {
@@ -27,18 +29,21 @@ export const CATERING_TRAYS: CateringTray[] = [
     name: 'Chicken Over Fries Tray',
     description: 'Two half-pans of chopped chicken piled over fries, with sauce.',
     serves: 'Serves 8–10',
+    image: 'assets/photos/catering/over-fries.jpg',
   },
   {
     id: 'tray-2',
     name: 'Slider Tray',
     description: 'Ten chicken sliders, each loaded with dill, slaw and signature sauce.',
     serves: '10 sliders',
+    image: 'assets/photos/catering/sliders.jpg',
   },
   {
     id: 'tray-3',
     name: 'Tender Tray',
     description: 'Twenty hand-breaded tenders with bread and sauce.',
     serves: '20 tenders',
+    image: 'assets/photos/catering/tenders.jpg',
   },
 ]
 

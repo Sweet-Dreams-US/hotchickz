@@ -20,6 +20,7 @@ yarn-error.log*
 pnpm-debug.log*
 
 # tooling scratch / reference captures (kept locally, not in repo)
+.gen/
 .playwright-mcp/
 hotchickz-current-site.png
 hotchickz-menu.png
