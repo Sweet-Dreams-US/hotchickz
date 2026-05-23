@@ -37,6 +37,7 @@ export function MenuItemCard({ item, index = 0 }: MenuItemCardProps) {
     return sum + (choice?.priceDelta ?? 0)
   }, 0)
   const price = round2(item.price + delta)
+  const isSoldOut = item.soldOut === true
 
   function handleAdd() {
     addItem(item, { heat, selections })
@@ -57,16 +58,31 @@ export function MenuItemCard({ item, index = 0 }: MenuItemCardProps) {
       whileHover={{ y: -6 }}
       className="group flex flex-col overflow-hidden rounded-2xl border border-bone/8 bg-ash shadow-lift transition-shadow duration-300 hover:shadow-glow-ember"
     >
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div
+        className={cn(
+          'relative aspect-[4/3] overflow-hidden',
+          isSoldOut && 'grayscale',
+        )}
+      >
         <FoodImage
           image={item.image}
           alt={item.name}
-          className="h-full w-full transition-transform duration-500 group-hover:scale-[1.06]"
+          className={cn(
+            'h-full w-full transition-transform duration-500 group-hover:scale-[1.06]',
+            isSoldOut && 'opacity-60',
+          )}
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ash via-ash/10 to-transparent" />
-        {item.badge && (
+        {item.badge && !isSoldOut && (
           <div className="absolute left-3 top-3">
             <Badge variant="flare">{item.badge}</Badge>
+          </div>
+        )}
+        {isSoldOut && (
+          <div className="absolute inset-0 grid place-items-center">
+            <span className="rounded-md bg-char/85 px-4 py-1.5 font-heading text-[11px] font-extrabold uppercase tracking-ember text-bone backdrop-blur-sm">
+              Sold Out Today
+            </span>
           </div>
         )}
       </div>
@@ -131,14 +147,19 @@ export function MenuItemCard({ item, index = 0 }: MenuItemCardProps) {
         <button
           type="button"
           onClick={handleAdd}
+          disabled={isSoldOut}
           className={cn(
-            'mt-4 flex h-11 items-center justify-center gap-2 rounded-xl font-heading text-sm font-extrabold uppercase tracking-ember transition-all duration-200 active:scale-[0.98]',
-            added
-              ? 'bg-heat-none text-char'
-              : 'bg-ember text-bone hover:bg-ember-bright hover:shadow-glow-ember',
+            'mt-4 flex h-11 items-center justify-center gap-2 rounded-xl font-heading text-sm font-extrabold uppercase tracking-ember transition-all duration-200',
+            isSoldOut
+              ? 'cursor-not-allowed bg-ash text-smoke'
+              : added
+                ? 'bg-heat-none text-char active:scale-[0.98]'
+                : 'bg-ember text-bone hover:bg-ember-bright hover:shadow-glow-ember active:scale-[0.98]',
           )}
         >
-          {added ? (
+          {isSoldOut ? (
+            'Sold Out'
+          ) : added ? (
             <>
               <Check size={16} />
               In the Bag

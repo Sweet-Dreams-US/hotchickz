@@ -13,7 +13,7 @@ import type {
   StaffMember,
 } from '@/data/seed/adminTypes'
 import type { CateringInquiry, Order, OrderStatus } from '@/lib/types'
-import { loadJSON, saveJSON, STORAGE_KEYS } from '@/lib/store'
+import { loadJSON, removeKey, saveJSON, STORAGE_KEYS } from '@/lib/store'
 
 /* ---- merge storefront activity into the admin dataset --------------- */
 
@@ -132,6 +132,8 @@ export function AdminDataProvider({ children }: { children: ReactNode }) {
       resetData: () => {
         const fresh = buildSeed()
         saveJSON(STORAGE_KEYS.adminData, fresh)
+        // Wipe the menu diff too so factory defaults return cleanly.
+        removeKey(STORAGE_KEYS.menu)
         setData(fresh)
       },
     }

@@ -39,6 +39,8 @@ export interface MenuItem {
   featured?: boolean
   /** Filename inside public/assets/menu/ — components fall back gracefully. */
   image: string
+  /** Set by the admin menu-state layer when an item is marked unavailable. */
+  soldOut?: boolean
 }
 
 export const CATEGORIES: MenuCategory[] = [

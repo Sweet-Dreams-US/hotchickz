@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { CATEGORIES, type CategoryKey, itemsByCategory } from '@/data/menu'
+import { CATEGORIES, type CategoryKey } from '@/data/menu'
+import { useMenuState } from '@/lib/menuStore'
 import { HEAT_LEVELS } from '@/data/heatLevels'
 import { asset } from '@/lib/asset'
 import { cn } from '@/lib/cn'
@@ -17,6 +18,7 @@ const GRID_FOR: Record<CategoryKey, string> = {
 }
 
 export function Menu() {
+  const menuState = useMenuState()
   const [active, setActive] = useState<CategoryKey>(CATEGORIES[0].key)
 
   useEffect(() => {
@@ -119,7 +121,7 @@ export function Menu() {
             </Reveal>
 
             <div className={cn('mt-7 grid gap-5', GRID_FOR[cat.key])}>
-              {itemsByCategory(cat.key).map((item, i) => (
+              {menuState.byCategory(cat.key).map((item, i) => (
                 <MenuItemCard key={item.id} item={item} index={i} />
               ))}
             </div>

@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import {
   CalendarDays,
+  ChefHat,
   LayoutDashboard,
   LogOut,
   PartyPopper,
@@ -19,6 +20,7 @@ import { cn } from '@/lib/cn'
 const NAV = [
   { to: '/admin', label: 'Dashboard', Icon: LayoutDashboard, end: true },
   { to: '/admin/orders', label: 'Orders', Icon: Receipt, end: false },
+  { to: '/admin/menu', label: 'Menu', Icon: ChefHat, end: false },
   { to: '/admin/analytics', label: 'Analytics', Icon: TrendingUp, end: false },
   { to: '/admin/accounting', label: 'Accounting', Icon: Wallet, end: false },
   { to: '/admin/socials', label: 'Socials', Icon: Share2, end: false },

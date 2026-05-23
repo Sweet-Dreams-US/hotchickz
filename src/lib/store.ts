@@ -44,4 +44,5 @@ export const STORAGE_KEYS = {
   cateringInquiries: 'catering-inquiries',
   adminAuth: 'admin-auth',
   adminData: 'admin-data',
+  menu: 'menu',
 } as const

@@ -6,6 +6,7 @@ import { AdminLogin } from './AdminLogin'
 import { AdminLayout } from './AdminLayout'
 import { Dashboard } from './Dashboard'
 import { Orders } from './Orders'
+import { MenuManagement } from './MenuManagement'
 import { Analytics } from './Analytics'
 import { Accounting } from './Accounting'
 import { Socials } from './Socials'
@@ -40,6 +41,7 @@ export function AdminApp() {
         <Route element={<AdminLayout onSignOut={signOut} />}>
           <Route index element={<Dashboard />} />
           <Route path="orders" element={<Orders />} />
+          <Route path="menu" element={<MenuManagement />} />
           <Route path="analytics" element={<Analytics />} />
           <Route path="accounting" element={<Accounting />} />
           <Route path="socials" element={<Socials />} />
