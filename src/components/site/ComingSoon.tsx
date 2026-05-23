@@ -1,4 +1,4 @@
-import { Instagram, MapPin } from 'lucide-react'
+import { Clock, Instagram, MapPin } from 'lucide-react'
 import { Reveal } from '@/components/ui/Reveal'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { Flame } from '@/components/brand/Flame'
@@ -15,6 +15,11 @@ import { cn } from '@/lib/cn'
  * COMING_SOON_PHOTO to its filename — the placeholder swaps out automatically.
  */
 const COMING_SOON_PHOTO: string | null = 'coming-soon.jpg'
+const COMING_SOON_ADDRESS = '407 W Coliseum Blvd, Fort Wayne, IN 46805'
+const COMING_SOON_MAP_URL = `https://www.google.com/maps?q=${encodeURIComponent(
+  COMING_SOON_ADDRESS,
+)}`
+const COMING_SOON_OPENING = 'To be announced'
 
 export function ComingSoon() {
   return (
@@ -31,8 +36,37 @@ export function ComingSoon() {
             One spot was never going to be enough. A second Hot Chickz is on the
             way — more hand-breaded heat, more{' '}
             <span className="font-script text-xl text-flare">happy tears</span>,
-            for more of the city. The reveal drops soon.
+            for more of the city. The opening date drops soon.
           </p>
+          <div className="mt-6 space-y-3">
+            <a
+              href={COMING_SOON_MAP_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="group flex items-start gap-3"
+            >
+              <MapPin size={18} className="mt-0.5 shrink-0 text-ember" />
+              <div>
+                <p className="font-heading text-[11px] font-extrabold uppercase tracking-ember text-smoke">
+                  Where
+                </p>
+                <p className="mt-0.5 font-sans text-bone transition-colors group-hover:text-flare">
+                  {COMING_SOON_ADDRESS}
+                </p>
+              </div>
+            </a>
+            <div className="flex items-start gap-3">
+              <Clock size={18} className="mt-0.5 shrink-0 text-ember" />
+              <div>
+                <p className="font-heading text-[11px] font-extrabold uppercase tracking-ember text-smoke">
+                  Opening
+                </p>
+                <p className="mt-0.5 font-sans text-bone">
+                  {COMING_SOON_OPENING}
+                </p>
+              </div>
+            </div>
+          </div>
           <a
             href={BUSINESS.socials.instagram}
             target="_blank"
@@ -40,7 +74,7 @@ export function ComingSoon() {
             className={cn(buttonStyles('primary', 'md'), 'mt-6')}
           >
             <Instagram size={16} />
-            Follow for the Reveal
+            Follow for the Opening Date
           </a>
         </Reveal>
 
