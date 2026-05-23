@@ -14,7 +14,7 @@ import { cn } from '@/lib/cn'
  * TO ADD THE REAL PHOTO: drop the image into public/assets/photos/ and set
  * COMING_SOON_PHOTO to its filename — the placeholder swaps out automatically.
  */
-const COMING_SOON_PHOTO: string | null = null
+const COMING_SOON_PHOTO: string | null = 'coming-soon.jpg'
 
 export function ComingSoon() {
   return (
